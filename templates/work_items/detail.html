@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="grid two">
+  <section class="card">
+    <h1>{{ status.work_item.title }}</h1>
+    <p><span class="pill">{{ status.work_item.status }}</span></p>
+    <p class="muted">文档：{{ status.work_item.markdown_doc_path }}</p>
+
+    <h2>发送新记录</h2>
+    <form action="/work-items/{{ status.work_item.id }}/send" method="post" enctype="multipart/form-data">
+      <textarea name="raw_text" rows="5" placeholder="输入自然语言记录，或直接输入 /todo、/done 等命令"></textarea>
+      <input type="file" name="files" multiple>
+      <button type="submit">归档到当前工作项</button>
+    </form>
+
+    <h2>当前 Todo</h2>
+    <ul>
+      {% for todo in status.open_todos %}
+      <li>{{ todo.content }}</li>
+      {% else %}
+      <li class="muted">暂无待办。</li>
+      {% endfor %}
+    </ul>
+
+    <h2>最近事件</h2>
+    <ul>
+      {% for event in status.recent_events %}
+      <li><span class="pill">{{ event.type }}</span> {{ event.content }}</li>
+      {% else %}
+      <li class="muted">暂无事件。</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Markdown 预览</h2>
+    <pre>{{ markdown_content }}</pre>
+  </section>
+</div>
+{% endblock %}

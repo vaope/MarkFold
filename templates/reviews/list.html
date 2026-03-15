@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="card">
+  <h1>待确认队列</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Review</th>
+        <th>建议工作项</th>
+        <th>候选</th>
+        <th>处理</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in reviews %}
+      <tr>
+        <td>
+          <strong>{{ review.id }}</strong><br>
+          <span class="muted">{{ review.notes or "" }}</span>
+        </td>
+        <td>{{ review.suggested_work_item_id or "无" }}</td>
+        <td>{{ review.candidate_ids|join(", ") if review.candidate_ids else "无" }}</td>
+        <td>
+          <form action="/reviews/{{ review.id }}/resolve" method="post">
+            <select name="work_item_id">
+              {% for item in work_items %}
+              <option value="{{ item.id }}">{{ item.title }}</option>
+              {% endfor %}
+            </select>
+            <input type="text" name="notes" placeholder="备注（可选）">
+            <button type="submit">确认归档</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="4" class="muted">没有待确认项。</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

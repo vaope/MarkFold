@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="grid two">
+  <section class="card">
+    <h1>工作项</h1>
+    <p class="muted">当前系统内已注册的工作项。</p>
+    <table>
+      <thead>
+        <tr>
+          <th>标题</th>
+          <th>状态</th>
+          <th>来源</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in work_items %}
+        <tr>
+          <td><a href="/work-items/{{ item.id }}">{{ item.title }}</a></td>
+          <td>{{ item.status }}</td>
+          <td>{{ item.source_type }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="3" class="muted">还没有工作项，先通过 CLI `/init` 或导入 Markdown 创建一个。</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>未完成 Todo</h2>
+    <ul>
+      {% for todo in open_todos %}
+      <li><span class="pill">{{ todo.work_item_id }}</span> {{ todo.content }}</li>
+      {% else %}
+      <li class="muted">暂无未完成 Todo。</li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
+
+<section class="card" style="margin-top: 20px;">
+  <h2>待确认队列</h2>
+  <ul>
+    {% for review in reviews %}
+    <li>
+      <a href="/reviews">Review {{ review.id }}</a>
+      <span class="muted">{{ review.notes or "需要人工确认归档目标" }}</span>
+    </li>
+    {% else %}
+    <li class="muted">当前没有待确认项。</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="grid two">
+  <section class="card">
+    <h1>昨日回顾</h1>
+    <form method="get" action="/queries">
+      <input type="date" name="target_date" value="{{ target_date or '' }}">
+      <button type="submit">查询</button>
+    </form>
+    <ul>
+      {% for item in summary %}
+      <li>
+        <strong>{{ item.title }}</strong>
+        <ul>
+          {% for value in item.progress %}
+          <li>进展：{{ value }}</li>
+          {% endfor %}
+          {% for value in item.completed %}
+          <li>完成：{{ value }}</li>
+          {% endfor %}
+          {% for value in item.risks %}
+          <li>风险：{{ value }}</li>
+          {% endfor %}
+          {% for value in item.decisions %}
+          <li>决策：{{ value }}</li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% else %}
+      <li class="muted">当天暂无结构化记录。</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>当前 Todo</h2>
+    <ul>
+      {% for todo in open_todos %}
+      <li><span class="pill">{{ todo.work_item_id }}</span> {{ todo.content }}</li>
+      {% else %}
+      <li class="muted">暂无未完成 Todo。</li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
+{% endblock %}

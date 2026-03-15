@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="card" style="max-width: 720px;">
+  <h1>导入已有 Markdown</h1>
+  <p class="muted">输入本地 Markdown 文件路径，系统会保留原文并追加 MarkFold 管理区块。</p>
+  <form action="/import" method="post">
+    <input type="text" name="path" placeholder="例如：vault/tasks/open/demo.md">
+    <button type="submit">导入工作项</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title or "MarkFold" }}</title>
+  <style>
+    :root {
+      --bg: #f6f2ea;
+      --card: #fffdf9;
+      --line: #d9cfbf;
+      --text: #2f261d;
+      --muted: #6d6154;
+      --accent: #9a3412;
+      --accent-soft: #fed7aa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #fff3df, transparent 35%),
+        linear-gradient(180deg, #fbf7f0 0%, var(--bg) 100%);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    .shell { max-width: 1180px; margin: 0 auto; padding: 24px; }
+    .nav {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0 24px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .grid { display: grid; gap: 20px; }
+    .grid.two { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 14px 40px rgba(47, 38, 29, 0.06);
+    }
+    .muted { color: var(--muted); }
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+    }
+    form { display: grid; gap: 12px; }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: white;
+      font: inherit;
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    pre {
+      overflow: auto;
+      background: #241c16;
+      color: #f8efe5;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="nav">
+      <a href="/">工作项</a>
+      <a href="/import">导入</a>
+      <a href="/reviews">待确认</a>
+      <a href="/queries">查询</a>
+      <span class="muted">Python MVP</span>
+    </nav>
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
